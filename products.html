@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Online Bookstore</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: white;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #cart {
+            margin-top: 20px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+        }
+        .cart-item {
+            margin-bottom: 5px;
+        }
+        button, a {
+            padding: 5px 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        button:hover, a:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>Available Books</h2>
+    <ul>
+        <li>Book 1 - $10 <button onclick="addToCart('Book 1', 10)">Add to Cart</button></li>
+        <li>Book 2 - $15 <button onclick="addToCart('Book 2', 15)">Add to Cart</button></li>
+        <li>Book 3 - $20 <button onclick="addToCart('Book 3', 20)">Add to Cart</button></li>
+    </ul>
+
+    <div id="cart">
+        <h3>Your Cart</h3>
+        <div id="cartItems"></div>
+        <p id="totalPrice"></p>
+    </div>
+
+    <!-- Link to Contact Page -->
+    <div style="margin-top: 20px;">
+        <a href="contacts.html">Contact Us</a>
+    </div>
+
+    <script>
+        const cart = [];
+
+        function addToCart(book, price) {
+            cart.push({ book, price });
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const totalPriceContainer = document.getElementById('totalPrice');
+
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `${item.book} - $${item.price} <button onclick="removeFromCart(${index})">Remove</button>`;
+                cartItemsContainer.appendChild(cartItem);
+                total += item.price;
+            });
+
+            totalPriceContainer.textContent = `Total: $${total}`;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+    </script>
+</body>
+</html>
